@@ -1,0 +1,335 @@
+
+===============================================================================
+ ____      _                   _____                         
+|  _ \ ___| |_ _ __ ___       |  ___| __ __ _ _ __ ___   ___ 
+| |_) / _ \ __| '__/ _ \ _____| |_ | '__/ _` | '_ ` _ \ / _ \
+|  _ <  __/ |_| | | (_) |_____|  _|| | | (_| | | | | | |  __/
+|_| \_\___|\__|_|  \___/      |_|  |_|  \__,_|_| |_| |_|\___|
+
+
+FORMAT - Retro-Frame Codepage Specifications
+
+General Documentation
+
+Repository:  <http://source.retro-frame.net/cp>
+File:        /doc/rf-cp.txt
+Version:     01.00!00
+Compliance:  Retro-Frame 1.0
+License:     MIT
+
+Copyright (c) 2026 Ingo Boehmer <ingo@retro-leisure.net>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===============================================================================
+
+
+Change history
+-------------------------------------------------------------------------------
+
+2026-02-14 : 01.00!00 : Ingo
+
+  Draft.
+
+
+Contents
+-------------------------------------------------------------------------------
+
+1. INTRODUCTION
+   1.1  Background
+   1.2  Scope
+   1.3  References
+
+2. ABOUT CODEPAGES
+
+3. CODEPAGE CONCEPTS
+   3.1  Codepoint mappings
+   3.2  Multibyte encodings
+   3.3  Shifted encodings
+   3.4  Replacement characters
+
+4. CODEPAGE FILES
+   4.1  Creating codepage files
+   4.2  Using codepage files
+   4.3  Security considerations
+
+5. CODEPAGE INVERSION
+
+
+
+1. INTRODUCTION
+===============================================================================
+
+
+1.1 Background
+-------------------------------------------------------------------------------
+
+[RETRO-FRAME] is a Retro-Endeavor that provides [COMMON DOCUMENTATION] (i.e.
+definitions, guidelines, templates and generic specifications) as well as
+topic-related specifications (covered by individual repositories like this
+one related to codepage specifications) which are intended for use in
+retrospective programming and may be used as a whole or partially for other
+purposes.
+
+Subject to the Retro-Frame Codepage Specifications are mappings of character
+encodings with an element size of one byte (i.e. codepages) to Retro-Frame
+character codepoints (see [COMMON DOCUMENTATION], /spec/rf-char.txt//).
+
+
+1.2 Scope
+-------------------------------------------------------------------------------
+
+This document provides general descriptions of codepages and codepage files.
+
+For a specification of Retro-Frame characters, which are a superset of
+[UNICODE], see [COMMON DOCUMENTATION].
+
+For a specification of codepage files, see [DATA FORMAT SPECIFICATIONS].
+
+
+1.3 References
+-------------------------------------------------------------------------------
+
+[COMMON DOCUMENTATION]
+Retro-Frame Common Documentation, see <http://source.retro-frame.net/common>.
+
+[DATA FORMAT SPECIFICATIONS]
+Retro-Frame Data Format Specifications, see
+<http://source.retro-frame.net/format>.
+
+[RETRO-FRAME]
+Retro-Frame homepage, see <http://source.retro-frame.net/>.
+
+[UNICODE]
+The Unicode(R) Standard, The Unicode Consortium, for latest version see
+<https://www.unicode.org/versions/latest/>.
+
+
+
+2. ABOUT CODEPAGES
+===============================================================================
+
+A CODEPAGE is defined as a CHARACTER ENCODING with an element size of one byte
+of a specific MINIMAL CHARACTER SET where the mandatory character are encoded
+by exactly one byte (see [COMMON DOCUMENTATION], /doc/rf-def.txt//, chapter
+5.13).
+
+While the general intention is to cover legacy codepages where each character
+is represented by exactly one byte, more complex codepages are supported,
+particularly multibyte codepages and shifted codepages.
+
+In order to distinguish between the encoded character and the corresponding
+Retro-Frame character, the elements of the encoded characters are called codes
+while the representation of a Retro-Frame character is called a CODEPOINT.
+
+[tables]
+
+Note that although fixed-width multibyte character sets like UTF-16 are not
+a codepage according the definition as the minimal character set is not encoded
+by exactly one byte. However, it is possible to represent even such encodings
+as Retro-Frame codepages.
+
+
+
+3. CODEPAGE CONCEPTS
+===============================================================================
+
+
+3.1 Codepoint mappings
+-------------------------------------------------------------------------------
+
+In the simplest case, a codepage maps the code of a single byte from the input
+to a single Retro-Frame codepoint. The entire codepage could be represented as
+a table which assigns each value in the range from 0 to 255 to a codepoint.
+
+However, the codepage might not cover all possible values representable by a
+byte. In this case, some codes are considered invalid. If a code is invalid,
+the program may abort, ignore it, replace it by a replacement character (see
+chapter 3.4) or process it as a direct encoding (see [COMMON DOCUMENTATION],
+/spec/rf-char.txt//, chapter 3.4).
+
+In addition, there might be codes which shall explicitly be ignored on the
+encoding level (in contrast to codepoints like NUL which are decoded to a valid
+codepoint but may be ignored by the program during processing).
+
+If a range of mappings results in consecutive codepoints or even codepoints
+which have values identical to the codes, the codepage may be compressed in
+order to save space (e.g. a single rule map 0x00..0x7F to 0000..007F rather
+than listing all 128 values).
+
+Although [UNICODE] intends to represent all possible characters, even such of
+retro computers (e.g. the block "Symbols for Legacy Computing" in the range
+U+1FB00..U+1FBFF) and consequently Retro-Frame characters, which are a superset
+of Unicode with additional codepoint ranges, in some cases it is necessary to
+map a single code to multiple (i.e. a sequence of) codepoints. Even some
+vendors which supply Unicode mappings use such mappings. Retro-Frame supports
+such mappings but limits the number of mapped codepoints to 16.
+
+
+3.2 Multibyte encodings
+-------------------------------------------------------------------------------
+
+
+3.3 Shifted encodings
+-------------------------------------------------------------------------------
+
+Shifted encodings allow the encoding of more than 256 codepoints without
+multibyte encodings (they may be, however, be mixed with multibyte encodings).
+
+A specified shift-out codepoint instructs the program to switch permanently
+to another codepage. Multiple shift-out codepoints may switch to the same or
+different codepages. The shifted codepage may itself provide further shift-out
+codepoints.
+
+This feature may be illustrated by the following example:
+
+  +--> CODEPAGE-0   +--> CODEPAGE-1   +--> CODEPAGE-2   +--> CODEPAGE-3
+  |                 |                 |                 |
+  |    [...]        |    [...]        |    [...]        |    [...]
+  |    shift-out ---+    shift-out ---+    shift-out ---+    shift-out ---+
+  |    [...]        |    [...]        |    [...]             [...]        |
+  |    shift-out ---+                 |    shift-out ---+                 |
+  |    [...]                          |    [...]        |                 |
+  |    shift-out ---------------------+                 |                 |
+  |    [...]                                            |                 |
+  |                                                     |                 |
+  +-----------------------------------------------------+-----------------+
+
+While a shift-out always switches to a specific codepage table, a shift-in
+codepoint instructs the program to switch back to the previous codepage table
+from which the last shift-out originated. However, in order to avoid
+maintaining a shift-out stack, this works only once (i.e. after a shift-in, a
+subsequent shift-in has no effect). Similarly, if a shift-in occurs without a
+matching shift-out, no switch is performed.
+
+In the example above, CODEPAGE-2 may be shifted from CODEPAGE-0 or CODEPAGE-1.
+A shift-in codepoint in CODEPAGE-2 will would back to CODEPAGE-0 or CODEPAGE-1,
+depending on the originating shift-out codepage. After a shift-out from
+CODEPAGE-0 to CODEPAGE-1 and a subsequent shift-out to CODEPAGE-2, the next
+shift-in will switch back to CODEPAGE-1 and another shift-in would have no
+effect.
+
+Note that such a mechanism may work without any shift-ins (e.g. one codepage
+table switches to another one which may switch back using its own shift-out
+rather than using a shift-in). In those cases the shift-outs may be considered
+a codepage table selector.
+
+
+3.4 Replacement characters
+-------------------------------------------------------------------------------
+
+If a code cannot be mapped to a corresponding codepoint or vice versa, the
+character may be replaced by a replacement character.
+
+Retro-Frame uses the [UNICODE] codepoint FFFD as the replacement character and
+should always be used if replacement takes place on decoding. On encoding, a
+code which is mapped to that codepoint shall be used if specified by the
+codepage. Otherwise, a question mark ('?') shall be used as the replacement
+character.
+
+
+
+4. CODEPAGE FILES
+===============================================================================
+
+
+4.1 Creating codepage files
+-------------------------------------------------------------------------------
+
+
+4.2 Using codepage files
+-------------------------------------------------------------------------------
+
+In general, a Retro-Frame program shall read a codepage specification from
+binary codepage files in the CP data format. However, other formats (e.g.
+codepage code files in the CPCODE data format or codepage specifications in
+the CPSPEC data format) may also be supported.
+
+It the path to a codepage file is determined, the following precedence is
+recommended (however, see chapter 4.3 for security considerations):
+
+- Explicitly provided directories (e.g. by a program argument)
+- Current directory
+- Environment variable
+- Program directory
+
+
+4.3 Security considerations
+-------------------------------------------------------------------------------
+
+Note that codepages may change the contents of a text file in an unintended
+manner. As a simple example, a codepage file may use Latin-1 mappings except
+that codepoint 0031 ('1') is translated to 0039 ('9') in which case the
+original Latin-1 string "199" would result in "999".
+
+Thus, the integrity of a codepage file shall be protected. If the integrity
+relies on the path where a codepage file is located, care should be taken if
+multiple or dynamic paths, particularly if the current directory, are searched.
+
+In addition, it should be considered that character encodings may circumvent
+security features (e.g. an EBCDIC encoded text file which can be properly
+decoded by a program may prevent detection of malicious content by a malware
+scanner or content filter which expects ASCII or UTF-8 encoded text).
+
+
+
+5. CODEPAGE INVERSION
+===============================================================================
+
+A codepage always maps a byte or a sequence of bytes from the encoded data to
+Retro-Frame codepoints and may thus directly be used for decoding characters
+but not for encoding. In order to avoid the creation of complementary rules
+for encoding, any codepage can be inverted.
+
+The inverted codepage maps codepoints or sequences of codepoints to codes or
+sequences of codes and should consider the following rules:
+
+- If a codepoint is representable by multipe codes or sequences of codes, the
+  encoding with the minimal number of encoding bytes shall be chosen. If still
+  multiple codes or sequences of codes are possible, the code with the lowest
+  value (big endian order on a sequence of codes) shall be chosen.
+
+- If a codepoint is not representable by the codepage at all (in fact, most
+  of the legacy codepages are quite limited), it may be ignored, replaced by a
+  replacement character (see chapter 3.4) or encoded as an escape sequence (see
+  [COMMON DOCUMENTATION], /spec/rf-char.txt//, chapter 5.5). Note that if
+  escape sequences are used, any regular escape character (i.e. the circumflex
+  accent '^') must be escaped itself by doubling it on encoding.
+
+- A direct encoding has never a codepage mapping. However, the program may
+  represent the direct encoding by the code which equals the value of the
+  direct encoding. Otherwise, the same options like for not representable
+  codepoints apply (see above).
+
+- A sequence of codepoints may be represented by a code or a sequence of codes
+  if the sequence of codepoints is marked as invertible. If substrings of such
+  a sequence can also be represented (in particular the first codepoint, which
+  is probably almost always the case), the longest sequence shall be used for
+  encoding. This rule has a higher priority than the minimal number of encoding
+  bytes (e.g. if a sequence of two codepoints can be encoded as 3 bytes while
+  each codepoint individually can be represented by a single byte, the sequence
+  shall still be encoded rather than both codepoints individually).
+
+- If shifted codepages are used (see chapter 3.3), shifts may be required
+  before a codepoint can be encoded. While in most cases this will be a
+  single shift-out or shift-in, much more complex cases may occur (the most
+  complex case is a shift-in, followed by a shift-reset and a sequence of
+  shift-outs). In such cases, the minimum number of shift-outs shall be chosen.
+  If it is not possible to switch to the required codepage any more, the
+  codepoint is considered not representable.

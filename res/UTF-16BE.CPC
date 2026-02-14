@@ -1,0 +1,40 @@
+RFFF/1.0?CP-CODE/1.0:CP/3.0
+
+;******************************************************************************
+;
+;  RETRO-FRAME UTF-16 BIG ENDIAN CODEPAGE CODE
+;
+;  REPOSITORY:  <HTTP://SOURCE.RETRO-FRAME.NET/CP>
+;  FILE:        /RES/UTF-16BE.CPC//
+;  VERSION:     01.00!00
+;  COMPLIANCE:  RETRO-FRAME 1.0
+;  LICENSE:     MIT
+;
+;******************************************************************************
+
+00..D7  MULTIBYTE :0000
+D8..DB  MULTIBYTE :SURROGATE1
+DC..DF  MULTIBYTE -            ; HIGH-SURROGATE MUST COME FIRST
+E0..FF  MULTIBYTE :E000
+
+:0000
+
+00..FF  ITERATE 0000
+
+:E000
+
+00..FF  ITERATE E000
+
+:SURROGATE1
+
+00..FF  MULTIBYTE :SURROGATE2
+
+:SURROGATE2
+
+00..DB  MULTIBYTE -            ; LOW-SURROGATE EXPECTED
+DC..DF  MULTIBYTE :SURROGATE3
+E0..FF  MULTIBYTE -            ; LOW-SURROGATE EXPECTED
+
+:SURROGATE3
+
+00..FF  ITERATE 010000

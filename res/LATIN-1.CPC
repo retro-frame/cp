@@ -1,0 +1,15 @@
+RFFF/1.0?CP-CODE/1.0:CP/1.0
+
+;******************************************************************************
+;
+;  RETRO-FRAME LATIN-1 CODEPAGE CODE
+;
+;  REPOSITORY:  <HTTP://SOURCE.RETRO-FRAME.NET/CP>
+;  FILE:        /RES/LATIN-1.CPC//
+;  VERSION:     01.00!00
+;  COMPLIANCE:  RETRO-FRAME 1.0
+;  LICENSE:     MIT
+;
+;******************************************************************************
+
+00..FF  /

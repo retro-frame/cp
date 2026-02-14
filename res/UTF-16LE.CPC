@@ -1,0 +1,32 @@
+RFFF/1.0?CP-CODE/1.0:CP/3.0
+
+;******************************************************************************
+;
+;  RETRO-FRAME UTF-16 LITTLE ENDIAN CODEPAGE CODE
+;
+;  REPOSITORY:  <HTTP://SOURCE.RETRO-FRAME.NET/CP>
+;  FILE:        /RES/UTF-16LE.CPC//
+;  VERSION:     01.00!00
+;  COMPLIANCE:  RETRO-FRAME 1.0
+;  LICENSE:     MIT
+;
+;******************************************************************************
+
+00..FF  MULTIBYTE :00
+
+:00
+
+00..D7  ITERATE-LE 0000
+D8..DB  MULTIBYTE :00D8
+DC..DF  -                ; HIGH-SURROGATE MUST COME FIRST
+E0..FF  ITERATE-LE E000
+
+:00D8
+
+00..FF  MULTIBYTE :00D800
+
+:00D800
+
+00..DB  -                     ; LOW-SURROGATE EXPECTED
+DC..DF  ITERATE-LE-16 010000
+E0..FF  -                     ; LOW-SURROGATE EXPECTED

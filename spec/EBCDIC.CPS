@@ -1,0 +1,221 @@
+RFFF/1.0?CP-SPEC/1.0
+
+
+1141, AUSTRIA-EUR, GERMANY-EUR  ; CODEPAGE 273 WITH EURO SIGN
+(
+    =   273
+
+    9F: 20AC  ; REPLACE CURRENCY SIGN BY EURO SIGN
+)
+
+
+273, AUSTRIA, GERMANY
+(
+    =   500
+
+    43: 007B
+    4A: 00C4
+    59: 007E
+    5A: 00DC
+    63: 005B
+    6A: 00F6
+    7C: 00A7
+    A1: 00DF
+    B5: 0040
+    C0: 00E4
+    CC: 00A6
+    D0: 00FC
+    DC: 007D
+    E0: 00D6
+    EC: 005C
+    FC: 005D
+)
+
+
+252, POLAND
+(
+    =   COMMON
+
+    4A: 017A
+    4F: 0021
+    5A: 0144
+    5B: 00A4
+    5F: 015B
+    6A: 0142
+    79: 0105
+    7B: 0023
+    7C: 0119
+    7D: 00B4
+    A1: 0107
+    C0: 00F3
+    D0: 017C
+    DA: 02DA
+    E0: 0141
+    EA: 02D9
+)
+
+
+1148, INTERNATIONAL-EUR  ; CODEPAGE 500 WITH EURO SIGN
+(
+    =   500
+
+    9F: 20AC  ; REPLACE CURRENCY SIGN BY EURO SIGN
+)
+
+
+500, INTERNATIONAL
+(
+    =   037
+
+    4A: 005B
+    4F: 0021
+    5A: 005D
+    5F: 005E
+    B0: 00A2
+    BA: 00AC
+    BB: 007C
+)
+
+
+1140, US-EUR, CANADA-EUR
+(
+    =   037
+
+    9F: 20AC  ; REPLACE CURRENCY SIGN BY EURO SIGN
+)
+
+
+037, US, CANADA
+(
+    =   COMMON
+
+          41: 00A0  00E2  00E4  00E0  00E1  00E3  00E5  00E7  00F1  00A2                      4F: 007C
+          51: 00E9  00EA  00EB  00E8  00ED  00EE  00EF  00EC  00DF  0021  0024                5F: 00AC
+                62: 00C2  00C4  00C0  00C1  00C3  00C5  00C7  00D1  00A6
+    70: 00F8  00C9  00CA  00CB  00C8  00CD  00CE  00CF  00CC  0060     ,  0023  0040
+    80: 00D8                                                    8A: 00AB  00BB  00F0  00FD  00FE  00B1
+    90: 00B0                                                    9A: 00AA  00BA  00E6  00B8  00C6  00A4
+    A0: 00B5  007E                                              AA: 00A1  00BF  00D0  00DD  00DE  00AE
+    B0: 005E  00A3  00A5  00B7  00A9  00A7  00B6  00BC  00BD  00BE  005B  005D  00AF  00A8  00B4  00D7
+    C0: 007B                                                    CA: 00AD  00F4  00F6  00F2  00F3  00F5
+    D0: 007D                                                    DA: 00B9  00FB  00FC  00F9  00FA  00FF
+    E0: 005C  00F7                                              EA: 00B2  00D4  00D6  00D2  00D3  00D5
+                                                                FA: 00B3  00DB  00DC  00D9  00DA
+)
+
+
+COMMON  ; COMMON EBCDIC CODEPOINTS
+(
+    =   BASIC
+
+    ; CONTROL CHARACTERS:
+
+    00: 0000  0001  0002  0003  009C     ,  0086  007F  0097  008D  008E                0E: 000E  000F
+        0010  0011  0012  0013  009D     ,  0008  0087  0018  0019  0092  008F  001C  001D  001E  001F
+        0080  0081  0082  0083  0084     ,  0017  001B  0088  0089  008A  008B  008C  0005  0006  0007
+        0090  0091  0016  0093  0094  0095  0096  0004  0098  0099  009A  009B  0014  0015  009E  001A
+
+    ; INVALIDATE NON-INVARIANT CODEPOINTS OF THE BASIC CHARACTER SET:
+
+    4F: -
+    5A: -
+    BB: -
+
+    4A: -
+    5B: -
+    67: -
+    AD: -
+    E0: -
+
+    5F: -
+    69: -
+    B0: -
+    BA: -
+    EC: -
+
+    ; SYMBOLS:
+
+    6D: 005F  ; LOW LINE
+
+    ; EO (EIGHT ONES):
+
+    FF: 009F
+)
+
+
+BASIC  ; EBCDIC CODEPOINTS OF THE BASIC CHARACTER SET
+(
+    =   MINIMAL
+
+    ; INVARIANT SYMBOLS:
+
+    50: 0026  ; AMPERSAND
+    6C: 0025  ; PERCENT SIGN
+    7D: 0027  ; APOSTROPHE
+
+    ; NON-INVARIANT SYMBOLS (SHALL WORK ON MOST BUT NOT ALL EBCDIC CODEPAGES):
+
+    4F: 0021  ; EXCLAMATION MARK
+    5A: 0021
+    BB: 0021
+
+    4A: 0024  ; DOLLAR SIGN
+    5B: 0024
+    67: 0024
+    AD: 0024
+    E0: 0024
+
+    5F: 005E  ; CIRCUMFLEX ACCENT
+    69: 005E
+    B0: 005E
+    BA: 005E
+    EC: 005E
+
+    ; LOWERCASE LETTERS:
+
+          81: 0061..0069
+          91: 006A..0072
+                A2: 0073..007A
+)
+
+
+MINIMAL  ; INVARIANT EBCDIC CODEPOINTS OF THE MINIMAL CHARACTER SET
+(
+    ; SPACING AND LINE BREAKS:
+
+    05: 0009  ; HT (HORIZONTAL TAB)
+    0B: 000B  ; VT (VERTICAL TAB)
+    0C: 000C  ; FF (FORM FEED)
+    0D: 000D  ; CR (CARRIAGE RETURN)
+    15: 0085  ; NL (NEW LINE)
+    25: 000A  ; LF (LINE FEED)
+    40: 0020  ; SP (SPACE)
+
+    ; SYMBOLS:
+
+    4B: 002E  ; FULL STOP
+    4C: 003C  ; LESS-THAN SIGN
+    4D: 0028  ; LEFT PARENTHESIS
+    4E: 002B  ; PLUS SIGN
+    5C: 002A  ; ASTERISK
+    5D: 0029  ; RIGHT PARENTHESIS
+    5E: 003B  ; SEMICOLON
+    60: 002D  ; HYPHEN-MINUS
+    61: 002F  ; SOLIDUS
+    6B: 002C  ; COMMA
+    6E: 003E  ; GREATER-THAN SIGN
+    6F: 003F  ; QUESTION MARK
+    7A: 003A  ; COLON
+    7E: 003D  ; EQUALS SIGN
+    7F: 0022  ; QUOTATION MARK
+
+    ; UPPERCASE LETTERS:
+
+          C1: 0041..0049
+          D1: 004A..0052
+                E2: 0053..005A
+
+    ; DIGITS:
+
+    F0: 0030..0039
+)

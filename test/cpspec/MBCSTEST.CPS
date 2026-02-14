@@ -1,0 +1,76 @@
+RFFF/1.0?CP-SPEC/1.0
+
+DEPTH-5
+(
+    AAAA 5 *DEPTH-4
+)
+
+DEPTH-4
+(
+    AAAA 4 *DEPTH-3
+)
+
+DEPTH-3
+(
+    AAAA 3 *DEPTH-2
+)
+
+DEPTH-2
+(
+    AAAA 2 *DEPTH-1
+)
+
+DEPTH-1
+(
+    AAAA 1
+)
+
+FORK-OVERFLOW
+(
+    AAAA * FORK-0 * FORK-0 * FORK-7
+)
+
+FORK-MAX
+(
+    AAAA * FORK-0 * FORK-7
+)
+
+FORK-7
+(
+    0007 * FORK-6 * FORK-6
+)
+
+FORK-6
+(
+    0006 * FORK-5 * FORK-5
+)
+
+FORK-5
+(
+    0005 * FORK-4 * FORK-4
+)
+
+FORK-4
+(
+    0004 * FORK-3 * FORK-3
+)
+
+FORK-3
+(
+    0003 * FORK-2 * FORK-2
+)
+
+FORK-2
+(
+    0002 * FORK-1 * FORK-1
+)
+
+FORK-1
+(
+    0001 * FORK-0 * FORK-0
+)
+
+FORK-0
+(
+    0000
+)

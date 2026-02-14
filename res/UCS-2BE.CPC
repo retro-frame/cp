@@ -1,0 +1,25 @@
+RFFF/1.0?CP-CODE/1.0:CP/3.0
+
+;******************************************************************************
+;
+;  RETRO-FRAME UCS-2 BIG ENDIAN CODEPAGE CODE
+;
+;  REPOSITORY:  <HTTP://SOURCE.RETRO-FRAME.NET/CP>
+;  FILE:        /RES/UCS-2BE.CPC//
+;  VERSION:     01.00!00
+;  COMPLIANCE:  RETRO-FRAME 1.0
+;  LICENSE:     MIT
+;
+;******************************************************************************
+
+00..D7  MULTIBYTE :0000
+D8..DF  MULTIBYTE -
+E0..FF  MULTIBYTE :E000
+
+:0000
+
+00..FF  ITERATE 0000
+
+:E000
+
+00..FF  ITERATE E000

@@ -1,0 +1,210 @@
+RFFF/1.0?CP-CODE/1.0??; TEST CODEPAGE CODE
+
+00      -  ; FE 00 (MAP 00 TO INVALID)
+01..02-    ; FF 00 FE 00 (MAP 01 AND 02 TO INVALID)
+
+03      .  ; FE 04 (MAP 03 TO IGNORE)
+04..05.    ; FF 00 FF 04 (MAP 04 AND 05 TO IGNORE)
+
+06/        ; FE 08 (MAP 06 TO 06)
+07..08  /  ; FF 00 FE 08 (MAP 07 TO 07 AND 08 TO 08)
+
+09  0 1(0 1) 2  ; 00 01 FE 41 00 01 02
+
+0D..0E  ( 0 1 )  ; FF 00 FE 41 00 01
+
+0F      ITERATE BAD        ; FE 30 CA ED (MAP 0F TO 000BAD)
+10..11  ITERATE BAD        ; FF 00 FE 30 CA ED (MAP 10 TO 000BAD AND 11 TO 000BAE)
+12      ITERATE-LE BAD     ; FE 34 CA ED (MAP 12 TO 000BAD)
+13..14  ITERATE-LE BAD     ; FF 00 FE 34 CA ED (MAP 13 TO 000BAD AND 14 TO 000BAE)
+15      ITERATE-LE-32 BAD  ; FE 38 CA ED (MAP 15 TO 000BAD)
+16..17  ITERATE-LE-32 BAD  ; FF 00 FE 38 CA ED (MAP 16 TO 000BAD AND 17 TO 000BAE)
+18      ITERATE-LE-16 BAD  ; FE 3C CA ED (MAP 18 TO 000BAD)
+19..1A  ITERATE-LE-16 BAD  ; FF 00 FE 3C CA ED (MAP 19 TO 000BAD AND 1A TO 000BAE)
+
+1B      MULTIBYTE -  ; FE 20 (MAP 20 ?? TO INVALID)
+1C..1D  MULTIBYTE-   ; FF 00 FE 20 (MAP 1C ?? AND 1D ?? TO INVALID)
+1E      MULTIBYTE .  ; FE 24 (MAP 27 ?? TO IGNORE)
+1F..21  MULTIBYTE.   ; FF 01 FE 24 (MAP 1F ??, 20 ?? AND 21 ?? TO IGNORE)
+22      MULTIBYTE /  ; FE 28 (MAP 22 ?? TO LATIN-1)
+23..26  MULTIBYTE/   ; FF 02 FE 28 (MAP 23 ??, 24 ??, 25 ?? AND 26 ?? TO LATIN-1)
+
+27      MULTIBYTE :2-PAGE0-64-IDENTIFIER-LENGTH-31  ; FE 2C 00
+28..29  MULTIBYTE: 2-PAGE0-64-IDENTIFIER-LENGTH-31  ; FF 00 FE 2C 00
+
+2A      MULTIBYTE :2-PAGE065  ; FE 2C 01
+2B..2C  MULTIBYTE: 2-PAGE065  ; FF 00 FE 2C 01
+
+2D      MULTIBYTE :PAGE001  ; FE C1
+2E..2F  MULTIBYTE: PAGE001  ; FF 00 FE C1
+
+30      <<  ; FE 0C
+31..32  <<  ; FF 00 FE 0C
+
+33      > -  ; FE 10
+34..35>-     ; FF 00 FE 10
+
+36      > .  ; FE 14
+37..38>.     ; FF 00 FE 14
+
+39      > /  ; FE 18
+3A..3B>/     ; FF 00 FE 18
+
+3C      MULTIBYTE :2-PAGE0-64-IDENTIFIER-LENGTH-31  ; FE 3C 00
+3D..3E  MULTIBYTE: 2-PAGE0-64-IDENTIFIER-LENGTH-31  ; FF 00 FE 3C 00
+
+3F      MULTIBYTE :2-PAGE065  ; FE 3C 01
+40..41  MULTIBYTE: 2-PAGE065  ; FF 00 FE 3C 01
+
+42      > :PAGE004  ; FE 84
+43..44>:   PAGE004  ; FF 00 FE 84
+
+45  0 1(+0 1) 2  ; 00 01 FE 61 00 01 02
+
+49..4A  ( + 0 1 )  ; FF 00 FE 61 00 01
+
+  :  PAGE001  ; REFERENCE INDEX == 1
+
+0     ITERATE 0        ; FE 30 00 (MAP 2D 00 AND 2E 00 TO 000000, MAP 2F 00 TO 000001)
+1..2  ITERATE 1        ; FF 00 FE 30 01
+                          ; RESULTING MAPPINGS:
+                          ; 2D 01, 2E 01 ==> 000001
+                          ; 2D 02, 2E 02 ==> 000002
+                          ;        2F 01 ==> 000003
+                          ;        2F 02 ==> 000004
+
+3     ITERATE-LE 0     ; FE 34 00 (MAP 2D 03 AND 2E 03 TO 000000, MAP 2F 03 TO 000001)
+4..5  ITERATE-LE 1     ; FF 00 FE 34 01
+                          ; RESULTING MAPPINGS:
+                          ; 2D 04, 2E 04 ==> 000001
+                          ; 2D 05, 2F 04 ==> 000002
+                          ;        2E 05 ==> 000003
+                          ;        2F 05 ==> 000004
+
+6     ITERATE-LE-32 0  ; FE 38 00 (MAP 2D 06 AND 2E 06 TO 000000, MAP 2F 06 TO 000001)
+7..8  ITERATE-LE-32 1  ; FF 00 FE 38 01
+                          ; RESULTING MAPPINGS:
+                          ; 2D 07, 2E 07 ==> 000001
+                          ; 2D 08, 2F 07 ==> 000002
+                          ;        2E 08 ==> 000003
+                          ;        2F 08 ==> 000004
+
+9     ITERATE-LE-16 0  ; FE 3C 00 (MAP 2D 09 AND 2E 09 TO 000000, MAP 2F 09 TO 000001)
+A..B  ITERATE-LE-16 1  ; FF 00 FE 3C 01
+                          ; RESULTING MAPPINGS:
+                          ; 2D 0A, 2E 0A ==> 000001
+                          ; 2D 0B, 2F 0A ==> 000002
+                          ;        2E 0B ==> 000003
+                          ;        2F 0B ==> 000004
+
+C MULTIBYTE:PAGE002  ; FE C2
+
+:PAGE002
+
+0..2  ITERATE F        ; FF 01 FE 30 0F
+                          ; RESULTING MAPPINGS:
+                          ; 2D 0C 00, 2E 0C 00 ==> 00000F
+                          ; 2D 0C 01, 2E 0C 01 ==> 000010
+                          ; 2D 0C 02, 2E 0C 02 ==> 000011
+                          ;           2F 0C 00 ==> 000012
+                          ;           2F 0C 01 ==> 000013
+                          ;           2F 0C 02 ==> 000014
+
+3..5  ITERATE-LE F     ; FF 01 FE 34 0F
+                          ; RESULTING MAPPINGS:
+                          ; 2D 0C 00, 2E 0C 00 ==> 00000F
+                          ; 2D 0C 01, 2F 0C 00 ==> 000010
+                          ; 2D 0C 02, 2E 0C 01 ==> 000011
+                          ;           2F 0C 01 ==> 000012
+                          ;           2E 0C 02 ==> 000013
+                          ;           2F 0C 02 ==> 000014
+
+6..8  ITERATE-LE-32 F  ; FF 01 FE 38 0F
+                          ; RESULTING MAPPINGS:
+                          ; 2D 0C 00, 2E 0C 00 ==> 00000F
+                          ; 2D 0C 01, 2F 0C 00 ==> 000010
+                          ; 2D 0C 02, 2E 0C 01 ==> 000011
+                          ;           2F 0C 01 ==> 000012
+                          ;           2E 0C 02 ==> 000013
+                          ;           2F 0C 02 ==> 000014
+
+9..B  ITERATE-LE-16 F  ; FF 01 FE 3C 0F
+                          ; RESULTING MAPPINGS:
+                          ; 2D 0C 00, 2E 0C 00 ==> 00000F
+                          ; 2D 0C 01, 2E 0C 01 ==> 000010
+                          ; 2D 0C 02, 2E 0C 02 ==> 000011
+                          ;           2F 0C 00 ==> 000012
+                          ;           2F 0C 01 ==> 000013
+                          ;           2F 0C 02 ==> 000014
+
+:PAGE003
+:PAGE004
+0<<  ; FE 0C
+:3-PAGE005
+:4-PAGE006
+:5-PAGE007
+00 (A)
+01 (A B)
+02 (1 2 3 4 5 6 7 8 9 A B C D E F)
+03 (0 1 2 3 4 5 6 7 8 9 A B C D E F)
+:1-PAGE008
+:0-PAGE009
+:2-PAGE010
+:2-PAGE011
+00 0 1 2 3 4 5 6 7 8 9 A B C D E F
+10 0 << << 1
+:2-PAGE012
+:2-PAGE013
+:2-PAGE014
+:2-PAGE015
+:2-PAGE016
+:2-PAGE017
+:2-PAGE018
+:2-PAGE019
+:2-PAGE020
+:2-PAGE021
+:2-PAGE022
+:2-PAGE023
+:2-PAGE024
+:2-PAGE025
+:2-PAGE026
+:2-PAGE027
+:2-PAGE028
+:2-PAGE029
+:2-PAGE030
+:2-PAGE031
+:2-PAGE032
+:2-PAGE033
+:2-PAGE034
+:2-PAGE035
+:2-PAGE036
+:2-PAGE037
+:2-PAGE038
+:2-PAGE039
+:2-PAGE040
+:2-PAGE041
+:2-PAGE042
+:2-PAGE043
+:2-PAGE044
+:2-PAGE045
+:2-PAGE046
+:2-PAGE047
+:2-PAGE048
+:2-PAGE049
+:2-PAGE050
+:2-PAGE051
+:2-PAGE052
+:1-PAGE053
+:2-PAGE054
+:9-PAGE055
+:2-PAGE056
+:0-PAGE057
+:2-PAGE058
+:2-PAGE059
+:2-PAGE060
+:2-PAGE061
+:2-PAGE062
+:2-PAGE063
+0/
+:2-PAGE0-64-IDENTIFIER-LENGTH-31
+:2-PAGE065
