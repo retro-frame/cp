@@ -1,0 +1,5 @@
+bin/* linguist-generated
+doc/* linguist-documentation
+res/* linguist-language=Data
+spec/* linguist-language=Data
+test/* linguist-language=Data
