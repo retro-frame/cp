@@ -1,5 +1,5 @@
-bin/* linguist-generated
-doc/* linguist-documentation
-res/* linguist-language=Data
-spec/* linguist-language=Data
-test/* linguist-language=Data
+bin/** linguist-generated=true
+doc/** linguist-documentation=true
+res/** linguist-language=Codepage
+spec/** linguist-language=Codepage
+test/** linguist-language=Text
