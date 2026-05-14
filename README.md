@@ -246,7 +246,7 @@ Retro-Frame Data Format Specifications repository, see
 
 For the source code of the Retro-C software RFCPTOOL (Retro-Frame Codepage
 Tool) see
-\<[http://source.retro-c.net/comp.stdc.rfcptool](http://source.retro-c.net/comp.stdc.rfcptool)\>.
+\<[http://source.retro-c.net/util.stdc.rfcptool](http://source.retro-c.net/util.stdc.rfcptool)\>.
 
 ### Unicode
 
